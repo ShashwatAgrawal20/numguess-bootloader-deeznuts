@@ -4,11 +4,23 @@ BITS 16
 init:
     mov si, welcome_message
     call print_some_fucking_text
+    call generate_random_number
     call start_the_goddamn_game
     jmp $
 
+generate_random_number:
+    ; somehow xor operation is faster and uses less code space, I can't confirm
+    ; this crap now but it's definetely a thing to have a look into.
+    xor ah, ah
+    int 0x1A
+    mov ax, dx
+    xor dx, dx
+    mov cx, 10
+    div cx
+    mov bx, dx
+    ret
+
 start_the_goddamn_game:
-    mov bx, 5
     call play_this_crap
     ret
 
